@@ -1,17 +1,23 @@
-Package: <package name>
-Version: <package version>
+Package: backpackR
+Version: 0.0.1
 Encoding: UTF-8
-Title: <edit>
+Title: A Framework for database updates
 Authors@R:
 	person("Miguel", "Alvarez", email="kamapu78@gmail.com",
 		role=c("aut","cre"), comment=c(ORCID="0000-0003-1500-1834"))
 Depends:
 	R(>= 4.0.0)
 Imports:
+    DBI,
+    RPostgres,
+    tcltk
 Suggests:
-Description: <edit>
+Description:
+    This is a suggested framework for archiving transactions and updates
+    done in Postgres databases using R.
 LazyData: true
 Roxygen: list(markdown = TRUE)
-License: file LICENSE
-URL: https://github.com/kamapu/<edit>
-BugReports: https://github.com/kamapu/<edit>/issues
+URL: https://github.com/kamapu/backpackR
+BugReports: https://github.com/kamapu/backpackR/issues
+RoxygenNote: 7.2.3
+License: MIT + file LICENSE
