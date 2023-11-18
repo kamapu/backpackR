@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>template-r-package</name>
+	<comment>
+		A GitHub template for an R package. Edit this description an the name.
+	</comment>
+	<projects>
+	</projects>
+	<buildSpec>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.statet.ide.resourceProjects.Statet</nature>
+		<nature>org.eclipse.statet.r.resourceProjects.R</nature>
+		<nature>org.eclipse.statet.r.resourceProjects.RPkg</nature>
+		<nature>org.eclipse.statet.docmlet.resourceProjects.Wikitext</nature>
+	</natures>
+</projectDescription>
