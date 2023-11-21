@@ -3,6 +3,7 @@
 export(credentials)
 export(db_backup)
 export(db_restore)
+export(use_template)
 importFrom(DBI,dbConnect)
 importFrom(DBI,dbDisconnect)
 importFrom(DBI,dbExistsTable)

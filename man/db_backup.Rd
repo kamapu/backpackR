@@ -48,15 +48,10 @@ for instance "--clean" or "--create".}
 Create a backup by 'pg_dump' and restore database
 }
 \details{
-The function \code{db_backup()} is a wrapper for \strong{pg_dump} and is creating
-writing a dump file named by the backed up database, a time stamp (date of
-creation) and a suffix (in the case of a further backup done at the same
-day).
+The function \code{db_backup()} is a wrapper for \strong{pg_dump}.
 
 The function \code{db_restore()} can restore the created backup files through
 \strong{pg_restore}.
-If several backups have been accumulated in a common folder, this function is
-able to recognize the newest one.
 }
 \author{
 Miguel Alvarez
