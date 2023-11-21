@@ -3,9 +3,8 @@
 # Author: Miguel Alvarez
 ################################################################################
 
-library(tcltk)
+library(backpackR)
 
-source("R/credentials.R")
+db_backup(dbname = "test-db", file = "test_bk", path="lab")
 
-myself <- credentials()
-myself
+
