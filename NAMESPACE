@@ -2,6 +2,7 @@
 
 export(credentials)
 export(db_backup)
+export(db_restore)
 importFrom(DBI,dbConnect)
 importFrom(DBI,dbDisconnect)
 importFrom(DBI,dbExistsTable)

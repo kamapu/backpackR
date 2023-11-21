@@ -2,16 +2,25 @@
 % Please edit documentation in R/db_backup.R
 \name{db_backup}
 \alias{db_backup}
+\alias{db_restore}
 \title{Create a backup by 'pg_dump' and restore database}
 \usage{
 db_backup(
   dbname,
+  filename,
   host = "localhost",
   port = "5432",
-  path = ".",
-  filename,
-  fext = ".backup",
   path_psql = "/usr/bin",
+  ...
+)
+
+db_restore(
+  dbname,
+  filename,
+  host = "localhost",
+  port = "5432",
+  path_psql = "/usr/bin",
+  opts = "--clean",
   ...
 )
 }
@@ -19,28 +28,18 @@ db_backup(
 \item{dbname}{Character value indicating the name of the target PostgreSQL
 database.}
 
+\item{filename}{Character value, the name of the backup file including the
+path to location and the extension (.backup). If not provided,
+the function guess the database's name.}
+
 \item{host}{Character value, the host name.}
 
 \item{port}{Integer value, the port applied for database connection.}
-
-\item{path}{Character value inidcating the folder to place the backup. It
-can also be part of 'filename'.}
-
-\item{filename}{Character value, the name of the backup file. If not
-provided,
-the function guess the database's name.}
-
-\item{fext}{Character value indicating the extension used for the backup
-file, including the leading dot. The extension ".backup" is used by
-default.}
 
 \item{path_psql}{Character value indicating the system path to PostgreSQL
 binaries (set default for Linux).}
 
 \item{...}{Further arguments passed to \code{\link[=system]{system()}}.}
-
-\item{backup}{A character value indicating a specific backup file to be used
-for restore.}
 
 \item{opts}{A character value indicating additional options for "pg_restore",
 for instance "--clean" or "--create".}
