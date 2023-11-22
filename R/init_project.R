@@ -4,22 +4,16 @@
 ################################################################################
 
 
-bp_init <- function(path, name, ...) {
+init_project <- function(path, name, dbname, main_script = "main-script", ...) {
   # Check existing directory
   if(file.exists(path))
     stop("The directory in 'path' is already existing.")
   # Create new directory
   dir.create(path=path, recursive=TRUE)
-  # Connect to database
-  bp_connect(dbname=name, ...)
   # Do a backup
-  # Write a log file
-  # Write a main-script
-  file.create(file.path(path, "main-script.R"))
-  # Write a description file
-  file.create(file.path(path, "_description.md"))
-  
+  db_backup(dbname = dbname, filename = file.path(path, "db-backup"))
+  # TODO: Write a log file
+  # Copy templates
+  copy_template(file.path(path, "main-script.R"), main_script)
+  copy_template(file.path(path, "_remarks.md"), "remarks")
 }
-
-library(here)
-here()
