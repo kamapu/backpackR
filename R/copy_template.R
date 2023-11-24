@@ -1,4 +1,4 @@
-#' @name use_template
+#' @name copy_template
 #'
 #' @title Insert templates to working directory
 #'
@@ -16,7 +16,7 @@
 #' @param ... Further arguments passed to [file.copy()].
 #'
 #' @export
-use_template <- function(filename, template, ...) {
+copy_template <- function(filename, template, ...) {
   path <- file.path(system.file(package = "backpackR"), "templates")
   templates_list <- list.files(path)
   sel_template <- pmatch(template, templates_list)
