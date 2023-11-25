@@ -24,6 +24,9 @@
 #'
 #' @author Miguel Alvarez
 #'
+#' @return
+#' An invisible vector with the name of the database and the name of the user.
+#'
 #' @export
 db_backup <- function(
     dbname, filename, host = "localhost", port = "5432",
@@ -45,6 +48,9 @@ db_backup <- function(
     "-F c", dbname, ">", filename
   ), ...)
   message(paste0("\nDatabase '", dbname, "' backed up in '", filename, "'"))
+  res <- c(dbname, user["user"])
+  names(res) <- c("dbname", "user")
+  invisible(res)
 }
 
 #' @rdname db_backup
@@ -70,4 +76,7 @@ db_restore <- function(
     "-v", filename
   ), ...)
   message(paste0("\nDatabase '", dbname, "' restored from '", filename, "'"))
+  res <- c(dbname, user["user"])
+  names(res) <- c("dbname", "user")
+  invisible(res)
 }

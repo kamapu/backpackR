@@ -23,8 +23,16 @@ init_project <- function(path, dbname, main_script = "main-script", ...) {
   # Create new directory
   dir.create(path = path, recursive = TRUE)
   # Do a backup
-  db_backup(dbname = dbname, filename = file.path(path, "db-backup.backup"))
-  # TODO: Write a log file
+  connection <- db_backup(
+    dbname = dbname,
+    filename = file.path(path, "db-backup.backup")
+  )
+  # Write a log file
+  log <- list(
+    database = connection["dbname"], user = connection["user"],
+    initialized = format(Sys.time(), format = "%Y-%m-%d %H:%M")
+  )
+  write_yaml(log, file.path(path, "project.yaml"))
   # Copy templates
   copy_template(file.path(path, "main-script.R"), main_script)
   copy_template(file.path(path, "remarks.md"), "remarks")

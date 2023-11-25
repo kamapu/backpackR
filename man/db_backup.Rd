@@ -44,6 +44,9 @@ binaries (set default for Linux).}
 \item{opts}{A character value indicating additional options for "pg_restore",
 for instance "--clean" or "--create".}
 }
+\value{
+An invisible vector with the name of the database and the name of the user.
+}
 \description{
 Create a backup by 'pg_dump' and restore database
 }

@@ -10,7 +10,9 @@ Depends:
 Imports:
     DBI,
     RPostgres,
-    tcltk
+    tcltk,
+    yaml,
+    zip
 Suggests:
 Description:
     This is a suggested framework for archiving transactions and updates
