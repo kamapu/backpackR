@@ -36,4 +36,6 @@ init_project <- function(path, dbname, main_script = "main-script", ...) {
   # Copy templates
   copy_template(file.path(path, "main-script.R"), main_script)
   copy_template(file.path(path, "remarks.md"), "remarks")
+  # Save session info
+  session_info(to_file = file.path(path, "session-info-init.log"))
 }

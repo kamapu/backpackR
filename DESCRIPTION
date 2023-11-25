@@ -10,6 +10,7 @@ Depends:
 Imports:
     DBI,
     RPostgres,
+    sessioninfo,
     tcltk,
     yaml,
     zip
