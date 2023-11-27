@@ -1,9 +1,9 @@
-#' @importFrom DBI dbConnect dbDisconnect dbExistsTable dbReadTable dbSendQuery
-#'     dbWriteTable
+#' @importFrom DBI dbConnect dbDisconnect dbExistsTable dbGetQuery dbReadTable
+#'     dbSendQuery dbWriteTable
 #' @importFrom RPostgres Postgres
 #' @importFrom sessioninfo session_info
 #' @importFrom tcltk tclVar tclvalue tkbind tkbutton tkdestroy tkentry tkfocus
 #'     tkgrid tkgrid.configure tklabel tktoplevel tkwait.window tkwm.title
 #' @importFrom yaml read_yaml write_yaml
-#' @importFrom zip zip
+#' @importFrom zip zip unzip
 NULL

@@ -22,7 +22,7 @@ release_project <- function(project, path, ...) {
     description$database, "-", format(exec_time, format = "%Y%m%d-%H%M"),
     ".zip"
   )
-  description$released = format(exec_time, format = "%Y-%m-%d %H:%M")
+  description$released <- format(exec_time, format = "%Y-%m-%d %H:%M")
   write_yaml(description, file.path(project, "project.yaml"))
   session_info(to_file = file.path(path, "session-info-release.log"))
   filenames <- list.files(project, recursive = TRUE, full.names = TRUE)

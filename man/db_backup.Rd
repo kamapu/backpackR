@@ -11,6 +11,8 @@ db_backup(
   host = "localhost",
   port = "5432",
   path_psql = "/usr/bin",
+  user,
+  pw,
   ...
 )
 
@@ -21,6 +23,8 @@ db_restore(
   port = "5432",
   path_psql = "/usr/bin",
   opts = "--clean",
+  user,
+  pw,
   ...
 )
 }
@@ -39,6 +43,12 @@ the function guess the database's name.}
 \item{path_psql}{Character value indicating the system path to PostgreSQL
 binaries (set default for Linux).}
 
+\item{user}{A character value with the name of the user of the database.
+If missing it will be prompted by \code{\link[=credentials]{credentials()}}.}
+
+\item{pw}{A character value with the password (not recommended to set in
+the script). If missing it will be prompted by \code{\link[=credentials]{credentials()}}.}
+
 \item{...}{Further arguments passed to \code{\link[=system]{system()}}.}
 
 \item{opts}{A character value indicating additional options for "pg_restore",
@@ -55,6 +65,9 @@ The function \code{db_backup()} is a wrapper for \strong{pg_dump}.
 
 The function \code{db_restore()} can restore the created backup files through
 \strong{pg_restore}.
+
+A prompt will request the name of the user and the respective password,
+except when they are already provided in the function's call.
 }
 \author{
 Miguel Alvarez
