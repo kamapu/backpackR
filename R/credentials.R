@@ -7,16 +7,21 @@
 #' This is to avoid writing passwords in the scripts.
 #' The credentials are then passed to other functions that require them.
 #'
+#' @param user A character value with the name of the user. It is optional to
+#'     add it straight in the call of the function.
+#' @param password A character value with the password. It is recommended to add it
+#'     manually in the prompt.
+#'
 #' @author Miguel Alvarez
 #'
 #' @export
-credentials <- function() {
+credentials <- function(user = "", password = "") {
   # Top level
   tt <- tktoplevel()
   tkwm.title(tt, "Log in")
   # Preset values
-  User <- tclVar("")
-  Password <- tclVar("")
+  User <- tclVar(user)
+  Password <- tclVar(password)
   # Labels
   label_User <- tklabel(tt, text = "User-ID:")
   label_Password <- tklabel(tt, text = "Password:")

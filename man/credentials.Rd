@@ -4,7 +4,14 @@
 \alias{credentials}
 \title{Prompt for credentials}
 \usage{
-credentials()
+credentials(user = "", password = "")
+}
+\arguments{
+\item{user}{A character value with the name of the user. It is optional to
+add it straight in the call of the function.}
+
+\item{password}{A character value with the password. It is recommended to add it
+manually in the prompt.}
 }
 \description{
 Prompt for credentials
