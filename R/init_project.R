@@ -12,25 +12,58 @@
 #' @param dbname A character value with the name of the database to be updated.
 #' @param main_script A character value with the name of the template used as
 #'     main script in the project.
+#' @param host Character value, the host name.
+#' @param port Integer value, the port applied for database connection.
+#' @param user A character value with the name of the user connecting the
+#'     database. If not provided, it will be prompted by [credentials()].
+#' @param password A character value with the password of the user. If not
+#'     provided, it will be prompted by [credentials()].
 #' @param ... Further arguments (not yet in use).
 #'
 #' @export
-init_project <- function(path, dbname, main_script = "main-script", ...) {
+init_project <- function(
+    path, dbname, main_script = "main-script", host = "localhost",
+    port = "5432", user, password, ...) {
   # Check existing directory
   if (file.exists(path)) {
     stop("The directory in 'path' is already existing.")
   }
   # Create new directory
   dir.create(path = path, recursive = TRUE)
+  # Request credentials
+  if (missing(user) | missing(password)) {
+    if (missing(user)) {
+      user <- ""
+    }
+    if (missing(password)) {
+      password <- ""
+    }
+    cred <- credentials(user = user, password = password)
+    user <- unname(cred["user"])
+    password <- unname(cred["password"])
+  }
   # Do a backup
-  connection <- db_backup(
+  db_backup(
     dbname = dbname,
-    filename = file.path(path, "db-backup.backup")
+    filename = file.path(path, "db-backup.backup"),
+    host = host,
+    port = port,
+    user = user,
+    password = password
+  )
+  # Connect the database
+  conn <- dbConnect(RPostgres::Postgres(),
+    dbname = dbname, host = host,
+    port = port, user = user,
+    password = password
   )
   # Write a log file
   log <- list(
-    database = connection["dbname"], user = connection["user"],
-    initialized = format(Sys.time(), format = "%Y-%m-%d %H:%M")
+    database = dbname,
+    user = user,
+    initialized = format(Sys.time(), format = "%Y-%m-%d %H:%M"),
+    dms = dbGetQuery(conn, "select version()")[[1]],
+    server = dbGetQuery(conn, "show server_version")[[1]]
   )
   write_yaml(log, file.path(path, "project.yaml"))
   # Copy templates

@@ -4,7 +4,16 @@
 \alias{init_project}
 \title{Initialize a new project for database updates}
 \usage{
-init_project(path, dbname, main_script = "main-script", ...)
+init_project(
+  path,
+  dbname,
+  main_script = "main-script",
+  host = "localhost",
+  port = "5432",
+  user,
+  password,
+  ...
+)
 }
 \arguments{
 \item{path}{A character value indicating the path for the new project.}
@@ -13,6 +22,16 @@ init_project(path, dbname, main_script = "main-script", ...)
 
 \item{main_script}{A character value with the name of the template used as
 main script in the project.}
+
+\item{host}{Character value, the host name.}
+
+\item{port}{Integer value, the port applied for database connection.}
+
+\item{user}{A character value with the name of the user connecting the
+database. If not provided, it will be prompted by \code{\link[=credentials]{credentials()}}.}
+
+\item{password}{A character value with the password of the user. If not
+provided, it will be prompted by \code{\link[=credentials]{credentials()}}.}
 
 \item{...}{Further arguments (not yet in use).}
 }

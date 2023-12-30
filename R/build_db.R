@@ -1,4 +1,4 @@
-#' @name build_database
+#' @name build_db
 #'
 #' @title Restore a database from a released backup
 #'
@@ -24,12 +24,16 @@
 #'     will be overwritten by the restore or not.
 #' @param host A character value with the host of the database.
 #' @param port A character value with the port of the database.
+#' @param user A character value with the name of the user connecting the
+#'     database. If not provided, it will be prompted by [credentials()].
+#' @param password A character value with the password of the user. If not
+#'     provided, it will be prompted by [credentials()].
 #' @param ... Further argunents passed to [db_restore()].
 #'
 #' @export
-build_database <- function(
+build_db <- function(
     path, dbname, release = "last", auxiliar_db,
-    overwrite = FALSE, host = "localhost", port = "5432", ...) {
+    overwrite = FALSE, host = "localhost", port = "5432", user, password, ...) {
   # list releases
   tab_rel <- sort_releases(path = path, dbname = dbname)
   # Select release
@@ -78,16 +82,29 @@ build_database <- function(
     zipfile = file.path(path, sel_rel),
     exdir = new_wd
   )
+  # Request credentials
+  if (missing(user) | missing(password)) {
+    if (missing(user)) {
+      user <- ""
+    }
+    if (missing(password)) {
+      password <- ""
+    }
+    cred <- credentials(user = user, password = password)
+    user <- unname(cred["user"])
+    password <- unname(cred["password"])
+  }
   # Restore database
-  cred <- credentials()
   if (missing(auxiliar_db)) {
     auxiliar_db <- dbname
   }
   # Check if database exists, if not create. Use argument overwrite.
   conn <- dbConnect(RPostgres::Postgres(),
     dbname = "postgres",
-    user = unname(cred["user"]), password = unname(cred["password"]),
-    host = host, port = port
+    user = user,
+    password = password,
+    host = host,
+    port = port
   )
   db_exists <- dbGetQuery(
     conn,
@@ -109,6 +126,15 @@ build_database <- function(
     tempdir(), dbname,
     "db-backup.backup"
   ), host = host, port = port, ...)
-  # Run the R script
+  # Read the R script
+  m_script <- readLines(con = file.path(tempdir(), dbname, "main-script.R"))
+  # Outcomment setting working directory
+  idx <- grepl("setwd(", m_script, fixed = TRUE)
+  m_script[idx] <- paste("#", m_script[idx])
+  # Reset working directory
+  line_1 <- paste0("setwd(\"", file.path(tempdir(), dbname), "\")\n\n")
+  m_script <- c(line_1, m_script)
+  writeLines(m_script, con = file.path(tempdir(), dbname, "main-script.R"))
+  # Run the script
   source(file = file.path(tempdir(), dbname, "main-script.R"))
 }

@@ -24,7 +24,7 @@ release_project <- function(project, path, ...) {
   )
   description$released <- format(exec_time, format = "%Y-%m-%d %H:%M")
   write_yaml(description, file.path(project, "project.yaml"))
-  session_info(to_file = file.path(path, "session-info-release.log"))
+  session_info(to_file = file.path(project, "session-info-release.log"))
   filenames <- list.files(project, recursive = TRUE, full.names = TRUE)
   filenames <- gsub(pattern = paste0(project, "/"), "", filenames)
   zip(file.path(normalizePath(path.expand(path)), zipname),

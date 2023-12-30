@@ -25,7 +25,7 @@
 #'     for instance "--clean" or "--create".
 #' @param user A character value with the name of the user of the database.
 #'     If missing it will be prompted by [credentials()].
-#' @param pw A character value with the password (not recommended to set in
+#' @param password A character value with the password (not recommended to set in
 #'     the script). If missing it will be prompted by [credentials()].
 #' @param ... Further arguments passed to [system()].
 #'
@@ -37,16 +37,18 @@
 #' @export
 db_backup <- function(
     dbname, filename, host = "localhost", port = "5432",
-    path_psql = "/usr/bin", user, pw, ...) {
+    path_psql = "/usr/bin", user, password, ...) {
   # Request credentials
-  if (missing(user) & missing(pw)) {
-    cred <- credentials()
-  } else {
-    if (!missing(user) & missing(pw)) {
-      cred <- credentials(user = user)
-    } else {
-      cred <- c(user = user, password = pw)
+  if (missing(user) | missing(password)) {
+    if (missing(user)) {
+      user <- ""
     }
+    if (missing(password)) {
+      password <- ""
+    }
+    cred <- credentials(user = user, password = password)
+    user <- unname(cred["user"])
+    password <- unname(cred["password"])
   }
   # Set filename if missing
   if (missing(filename)) {
@@ -54,16 +56,16 @@ db_backup <- function(
   }
   system(paste(
     paste0(
-      "PGPASSWORD=\"", cred["password"], "\""
+      "PGPASSWORD=\"", password, "\""
     ),
     file.path(path_psql, "pg_dump"),
-    "-U", cred["user"],
+    "-U", user,
     "-h", host,
     "-p", port,
     "-F c", dbname, ">", filename
   ), ...)
   message(paste0("\nDatabase '", dbname, "' backed up in '", filename, "'"))
-  res <- c(dbname, cred["user"])
+  res <- c(dbname, user)
   names(res) <- c("dbname", "user")
   invisible(res)
 }
@@ -73,33 +75,35 @@ db_backup <- function(
 #' @export
 db_restore <- function(
     dbname, filename, host = "localhost", port = "5432",
-    path_psql = "/usr/bin", opts = "--clean", user, pw, ...) {
+    path_psql = "/usr/bin", opts = "--clean", user, password, ...) {
   # Request credentials
-  if (missing(user) & missing(pw)) {
-    cred <- credentials()
-  } else {
-    if (!missing(user) & missing(pw)) {
-      cred <- credentials(user = user)
-    } else {
-      cred <- c(user = user, password = pw)
+  if (missing(user) | missing(password)) {
+    if (missing(user)) {
+      user <- ""
     }
+    if (missing(password)) {
+      password <- ""
+    }
+    cred <- credentials(user = user, password = password)
+    user <- unname(cred["user"])
+    password <- unname(cred["password"])
   }
   # Set filename if missing
   if (missing(filename)) {
     filename <- paste0(dbname, ".backup")
   }
   system(paste(
-    paste0("PGPASSWORD=\"", cred["password"], "\""),
+    paste0("PGPASSWORD=\"", password, "\""),
     file.path(path_psql, "pg_restore"),
     "-h", host,
     "-p", port,
-    "-U", cred["user"],
+    "-U", user,
     opts,
     "-d", dbname,
     "-v", filename
   ), ...)
   message(paste0("\nDatabase '", dbname, "' restored from '", filename, "'"))
-  res <- c(dbname, cred["user"])
+  res <- c(dbname, user)
   names(res) <- c("dbname", "user")
   invisible(res)
 }

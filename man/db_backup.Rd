@@ -12,7 +12,7 @@ db_backup(
   port = "5432",
   path_psql = "/usr/bin",
   user,
-  pw,
+  password,
   ...
 )
 
@@ -24,7 +24,7 @@ db_restore(
   path_psql = "/usr/bin",
   opts = "--clean",
   user,
-  pw,
+  password,
   ...
 )
 }
@@ -46,7 +46,7 @@ binaries (set default for Linux).}
 \item{user}{A character value with the name of the user of the database.
 If missing it will be prompted by \code{\link[=credentials]{credentials()}}.}
 
-\item{pw}{A character value with the password (not recommended to set in
+\item{password}{A character value with the password (not recommended to set in
 the script). If missing it will be prompted by \code{\link[=credentials]{credentials()}}.}
 
 \item{...}{Further arguments passed to \code{\link[=system]{system()}}.}
