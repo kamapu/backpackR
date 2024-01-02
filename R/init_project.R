@@ -23,7 +23,7 @@
 #' @export
 init_project <- function(
     path, dbname, main_script = "main-script", host = "localhost",
-    port = "5432", user, password, ...) {
+    port = "5432", user = "", password = "", ...) {
   # Check existing directory
   if (file.exists(path)) {
     stop("The directory in 'path' is already existing.")
@@ -31,13 +31,7 @@ init_project <- function(
   # Create new directory
   dir.create(path = path, recursive = TRUE)
   # Request credentials
-  if (missing(user) | missing(password)) {
-    if (missing(user)) {
-      user <- ""
-    }
-    if (missing(password)) {
-      password <- ""
-    }
+  if (user == "" | password == "") {
     cred <- credentials(user = user, password = password)
     user <- unname(cred["user"])
     password <- unname(cred["password"])
@@ -52,7 +46,7 @@ init_project <- function(
     password = password
   )
   # Connect the database
-  conn <- dbConnect(RPostgres::Postgres(),
+  conn <- connect_db(
     dbname = dbname, host = host,
     port = port, user = user,
     password = password

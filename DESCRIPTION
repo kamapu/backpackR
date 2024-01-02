@@ -9,12 +9,14 @@ Depends:
 	R(>= 4.0.0)
 Imports:
     DBI,
-    RPostgres,
+    divDB,
     sessioninfo,
     tcltk,
     yaml,
     zip
 Suggests:
+Remotes:
+    github::kamapu/divDB
 Description:
     This is a suggested framework for archiving transactions and updates
     done in Postgres databases using R.

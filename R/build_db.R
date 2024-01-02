@@ -99,7 +99,7 @@ build_db <- function(
     auxiliar_db <- dbname
   }
   # Check if database exists, if not create. Use argument overwrite.
-  conn <- dbConnect(RPostgres::Postgres(),
+  conn <- connect_db(
     dbname = "postgres",
     user = user,
     password = password,

@@ -1,6 +1,6 @@
-#' @importFrom DBI dbConnect dbDisconnect dbExistsTable dbGetQuery dbReadTable
+#' @importFrom DBI dbDisconnect dbExistsTable dbGetQuery dbReadTable
 #'     dbSendQuery dbWriteTable
-#' @importFrom RPostgres Postgres
+#' @importFrom divDB connect_db credentials
 #' @importFrom sessioninfo session_info
 #' @importFrom tcltk tclVar tclvalue tkbind tkbutton tkdestroy tkentry tkfocus
 #'     tkgrid tkgrid.configure tklabel tktoplevel tkwait.window tkwm.title

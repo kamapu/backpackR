@@ -10,8 +10,8 @@ init_project(
   main_script = "main-script",
   host = "localhost",
   port = "5432",
-  user,
-  password,
+  user = "",
+  password = "",
   ...
 )
 }
