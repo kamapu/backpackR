@@ -12,6 +12,8 @@ init_project(
   port = "5432",
   user = "",
   password = "",
+  run_last_bk = TRUE,
+  path_bk,
   ...
 )
 }
@@ -32,6 +34,12 @@ database. If not provided, it will be prompted by \code{\link[=credentials]{cred
 
 \item{password}{A character value with the password of the user. If not
 provided, it will be prompted by \code{\link[=credentials]{credentials()}}.}
+
+\item{run_last_bk}{A logical value whether the last release of the database
+should be first restored. This will be then performed by \code{\link[=build_db]{build_db()}}.}
+
+\item{path_bk}{A character value indicating the path to the folder containing
+the collection of backup files.}
 
 \item{...}{Further arguments (not yet in use).}
 }

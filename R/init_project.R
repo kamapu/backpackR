@@ -18,12 +18,16 @@
 #'     database. If not provided, it will be prompted by [credentials()].
 #' @param password A character value with the password of the user. If not
 #'     provided, it will be prompted by [credentials()].
+#' @param run_last_bk A logical value whether the last release of the database
+#'     should be first restored. This will be then performed by [build_db()].
+#' @param path_bk A character value indicating the path to the folder containing
+#'     the collection of backup files.
 #' @param ... Further arguments (not yet in use).
 #'
 #' @export
 init_project <- function(
     path, dbname, main_script = "main-script", host = "localhost",
-    port = "5432", user = "", password = "", ...) {
+    port = "5432", user = "", password = "", run_last_bk = TRUE, path_bk, ...) {
   # Check existing directory
   if (file.exists(path)) {
     stop("The directory in 'path' is already existing.")
@@ -36,6 +40,7 @@ init_project <- function(
     user <- unname(cred["user"])
     password <- unname(cred["password"])
   }
+  # TODO: Run the last backup
   # Do a backup
   db_backup(
     dbname = dbname,
@@ -57,12 +62,12 @@ init_project <- function(
     user = user,
     initialized = format(Sys.time(), format = "%Y-%m-%d %H:%M"),
     dms = dbGetQuery(conn, "select version()")[[1]],
-    server = dbGetQuery(conn, "show server_version")[[1]]
+    server = dbGetQuery(conn, "show server_version")[[1]],
+    remarks = paste0("| line 1\n", "| line2")
   )
   write_yaml(log, file.path(path, "project.yaml"))
   # Copy templates
   copy_template(file.path(path, "main-script.R"), main_script)
-  copy_template(file.path(path, "remarks.md"), "remarks")
   # Save session info
   session_info(to_file = file.path(path, "session-info-init.log"))
 }

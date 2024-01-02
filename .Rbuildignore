@@ -5,7 +5,7 @@
 ^build-pkg$
 ^data-raw$
 ^lab$
-^README\.Rmd$
+^README\.qmd$
 ^README\.md$
 ^\.github$
 ^LICENSE\.md$
