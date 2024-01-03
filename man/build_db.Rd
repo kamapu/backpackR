@@ -8,12 +8,14 @@ build_db(
   path,
   dbname,
   release = "last",
+  connection = "conn",
   auxiliar_db,
+  wd = tempdir(),
   overwrite = FALSE,
   host = "localhost",
   port = "5432",
-  user,
-  password,
+  user = "",
+  password = "",
   ...
 )
 }
@@ -32,9 +34,15 @@ For integers, the order of the backup according to \code{\link[=sort_releases]{s
 Negative values will be used to count backward with 0 as the newest
 release.}
 
+\item{connection}{A character value indicating the name of the connection
+object in the main script. By default it is called \code{"conn"}.}
+
 \item{auxiliar_db}{A character value. It can be used to create a different
 database as the one backed up. This may be useful when exploring the
 content of old version without altering the current one.}
+
+\item{wd}{A character value indicating the path to the working directory.
+By default it set to the temporary directory using \code{\link[=tempdir]{tempdir()}}.}
 
 \item{overwrite}{A logical value indicating whether the existing database
 will be overwritten by the restore or not.}
