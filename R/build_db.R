@@ -97,8 +97,8 @@ build_db <- function(
   if (missing(auxiliar_db)) {
     auxiliar_db <- dbname
   }
-  
-  
+
+
   # Check if database exists, if not create. Use argument overwrite.
   conn <- connect_db(
     dbname = "postgres",

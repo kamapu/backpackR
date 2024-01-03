@@ -39,9 +39,10 @@ provided, it will be prompted by \code{\link[=credentials]{credentials()}}.}
 should be first restored. This will be then performed by \code{\link[=build_db]{build_db()}}.}
 
 \item{path_bk}{A character value indicating the path to the folder containing
-the collection of backup files.}
+the collection of backup files. If missing, no restore will be done,
+otherwise \code{\link[=build_db]{build_db()}} will be previously executed.}
 
-\item{...}{Further arguments (not yet in use).}
+\item{...}{Further arguments passed to \code{\link[=build_db]{build_db()}}.}
 }
 \description{
 A project folder will contain all necessary data and scripts needed to update

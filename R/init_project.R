@@ -21,8 +21,9 @@
 #' @param run_last_bk A logical value whether the last release of the database
 #'     should be first restored. This will be then performed by [build_db()].
 #' @param path_bk A character value indicating the path to the folder containing
-#'     the collection of backup files.
-#' @param ... Further arguments (not yet in use).
+#'     the collection of backup files. If missing, no restore will be done,
+#'     otherwise [build_db()] will be previously executed.
+#' @param ... Further arguments passed to [build_db()].
 #'
 #' @export
 init_project <- function(
@@ -40,7 +41,13 @@ init_project <- function(
     user <- unname(cred["user"])
     password <- unname(cred["password"])
   }
-  # TODO: Run the last backup
+  # restore the last version
+  if (!missing(path_bk)) {
+    build_db(
+      path = path_bk, dbname = dbname, overwrite = TRUE, host = host,
+      port = port, user = user, password = password, ...
+    )
+  }
   # Do a backup
   db_backup(
     dbname = dbname,

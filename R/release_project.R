@@ -31,6 +31,8 @@ release_project <- function(project, path, ...) {
     root = project,
     files = filenames, ...
   )
-  message(paste0("Project released as '",
-          file.path(normalizePath(path.expand(path)), zipname), ".zip'"))
+  message(paste0(
+    "Project released as '",
+    file.path(normalizePath(path.expand(path)), zipname), ".zip'"
+  ))
 }
