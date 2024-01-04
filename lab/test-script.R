@@ -21,3 +21,7 @@ sort_releases("lab", "test-db")
 build_db(path="lab", dbname="test-db", port="5433", overwrite=TRUE,
     user="miguel")
 
+
+##
+build_db(path = "lab", release = 1, dbname = "test-db", overwrite = TRUE)
+build_db(path = "lab", release = 2, dbname = "test-db", overwrite = TRUE)

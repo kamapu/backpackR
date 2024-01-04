@@ -11,8 +11,8 @@ db_backup(
   host = "localhost",
   port = "5432",
   path_psql = "/usr/bin",
-  user,
-  password,
+  user = "",
+  password = "",
   ...
 )
 
@@ -23,8 +23,8 @@ db_restore(
   port = "5432",
   path_psql = "/usr/bin",
   opts = "--clean",
-  user,
-  password,
+  user = "",
+  password = "",
   ...
 )
 }

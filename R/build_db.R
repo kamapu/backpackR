@@ -17,9 +17,13 @@
 #'     For integers, the order of the backup according to [sort_releases()].
 #'     Negative values will be used to count backward with 0 as the newest
 #'     release.
+#' @param connection A character value indicating the name of the connection
+#'     object in the main script. By default it is called `"conn"`.
 #' @param auxiliar_db A character value. It can be used to create a different
 #'     database as the one backed up. This may be useful when exploring the
 #'     content of old version without altering the current one.
+#' @param wd A character value indicating the path to the working directory.
+#'     By default it set to the temporary directory using [tempdir()].
 #' @param overwrite A logical value indicating whether the existing database
 #'     will be overwritten by the restore or not.
 #' @param host A character value with the host of the database.
@@ -32,8 +36,9 @@
 #'
 #' @export
 build_db <- function(
-    path, dbname, release = "last", auxiliar_db,
-    overwrite = FALSE, host = "localhost", port = "5432", user, password, ...) {
+    path, dbname, release = "last", connection = "conn", auxiliar_db,
+    wd = tempdir(), overwrite = FALSE, host = "localhost", port = "5432",
+    user = "", password = "", ...) {
   # list releases
   tab_rel <- sort_releases(path = path, dbname = dbname)
   # Select release
@@ -77,19 +82,13 @@ build_db <- function(
     }
   }
   sel_rel <- tab_rel$release[N]
-  new_wd <- file.path(tempdir(), dbname)
+  new_wd <- file.path(wd, dbname)
   unzip(
     zipfile = file.path(path, sel_rel),
     exdir = new_wd
   )
   # Request credentials
-  if (missing(user) | missing(password)) {
-    if (missing(user)) {
-      user <- ""
-    }
-    if (missing(password)) {
-      password <- ""
-    }
+  if (user == "" | password == "") {
     cred <- credentials(user = user, password = password)
     user <- unname(cred["user"])
     password <- unname(cred["password"])
@@ -98,8 +97,10 @@ build_db <- function(
   if (missing(auxiliar_db)) {
     auxiliar_db <- dbname
   }
+
+
   # Check if database exists, if not create. Use argument overwrite.
-  conn <- dbConnect(RPostgres::Postgres(),
+  conn <- connect_db(
     dbname = "postgres",
     user = user,
     password = password,
@@ -112,7 +113,7 @@ build_db <- function(
       "select exists (select 1 from pg_database where datname = '",
       auxiliar_db, "')"
     )
-  )
+  )[[1]]
   if (db_exists & !overwrite) {
     stop(paste0(
       "Database '", auxiliar_db,
@@ -123,18 +124,26 @@ build_db <- function(
     dbSendQuery(conn, paste0("create database \"", auxiliar_db, "\""))
   }
   db_restore(dbname = auxiliar_db, filename = file.path(
-    tempdir(), dbname,
+    wd, dbname,
     "db-backup.backup"
-  ), host = host, port = port, ...)
+  ), host = host, port = port, user = user, password = password, ...)
   # Read the R script
-  m_script <- readLines(con = file.path(tempdir(), dbname, "main-script.R"))
+  m_script <- readLines(con = file.path(wd, dbname, "main-script.R"))
   # Outcomment setting working directory
-  idx <- grepl("setwd(", m_script, fixed = TRUE)
-  m_script[idx] <- paste("#", m_script[idx])
+  idx1 <- cumsum(grepl("# start-dontrun", m_script, fixed = TRUE))
+  idx2 <- rev(cumsum(rev(grepl("# end-dontrun", m_script, fixed = TRUE))))
+  idx <- idx1 == 1 & idx2 == 1
+  m_script[idx] <- paste("## ", m_script[idx])
   # Reset working directory
-  line_1 <- paste0("setwd(\"", file.path(tempdir(), dbname), "\")\n\n")
-  m_script <- c(line_1, m_script)
-  writeLines(m_script, con = file.path(tempdir(), dbname, "main-script.R"))
+  line_1 <- paste0("setwd(\"", file.path(wd, dbname), "\")\n\n")
+  line_2 <- paste0(
+    connection, " <- divDB::connect_db(dbname = \"", dbname,
+    "\", host = \"", host, "\", port = \"", port, "\", user = \"", user,
+    "\", password = \"", password, "\")\n\n"
+  )
+  m_script <- c(line_1, line_2, m_script)
+  writeLines(m_script, con = file.path(wd, dbname, "main-script.R"))
   # Run the script
-  source(file = file.path(tempdir(), dbname, "main-script.R"))
+  # source(file = file.path(wd, dbname, "main-script.R"))
+  system2("Rscript", args = file.path(wd, dbname, "main-script.R"))
 }

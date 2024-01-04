@@ -37,15 +37,9 @@
 #' @export
 db_backup <- function(
     dbname, filename, host = "localhost", port = "5432",
-    path_psql = "/usr/bin", user, password, ...) {
+    path_psql = "/usr/bin", user = "", password = "", ...) {
   # Request credentials
-  if (missing(user) | missing(password)) {
-    if (missing(user)) {
-      user <- ""
-    }
-    if (missing(password)) {
-      password <- ""
-    }
+  if (user == "" | password == "") {
     cred <- credentials(user = user, password = password)
     user <- unname(cred["user"])
     password <- unname(cred["password"])
@@ -75,15 +69,9 @@ db_backup <- function(
 #' @export
 db_restore <- function(
     dbname, filename, host = "localhost", port = "5432",
-    path_psql = "/usr/bin", opts = "--clean", user, password, ...) {
+    path_psql = "/usr/bin", opts = "--clean", user = "", password = "", ...) {
   # Request credentials
-  if (missing(user) | missing(password)) {
-    if (missing(user)) {
-      user <- ""
-    }
-    if (missing(password)) {
-      password <- ""
-    }
+  if (user == "" | password == "") {
     cred <- credentials(user = user, password = password)
     user <- unname(cred["user"])
     password <- unname(cred["password"])
