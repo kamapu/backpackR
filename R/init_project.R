@@ -70,7 +70,7 @@ init_project <- function(
     initialized = format(Sys.time(), format = "%Y-%m-%d %H:%M"),
     dms = dbGetQuery(conn, "select version()")[[1]],
     server = dbGetQuery(conn, "show server_version")[[1]],
-    remarks = paste0("| line 1\n", "| line2")
+    remarks = "|\n"
   )
   write_yaml(log, file.path(path, "project.yaml"))
   # Copy templates

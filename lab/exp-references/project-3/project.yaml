@@ -1,9 +1,10 @@
-database: test-db
+database: mreferences
 user: miguel
-initialized: 2024-01-03 00:03
+initialized: 2024-01-04 10:20
 dms: PostgreSQL 16.1 (Ubuntu 16.1-1.pgdg22.04+1) on x86_64-pc-linux-gnu, compiled
   by gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0, 64-bit
 server: 16.1 (Ubuntu 16.1-1.pgdg22.04+1)
-remarks: |
-  Importing first 100 references from database.
-released: 2024-01-03 23:44
+remarks: |-
+  | line 1
+  | line2
+released: 2024-01-04 11:28

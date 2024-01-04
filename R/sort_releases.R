@@ -28,6 +28,7 @@ sort_releases <- function(path, dbname, ...) {
   time_string <- sub(".*-(\\d{4}\\d{2}\\d{2}-\\d{4})\\.zip", "\\1", candidates)
   candidates <- data.frame(
     nr = seq_along(candidates),
+    neg = 1 - seq_along(candidates),
     release = candidates,
     time_release = strptime(time_string, format = "%Y%m%d-%H%M")
   )
