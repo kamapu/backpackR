@@ -15,7 +15,7 @@ conn <- connect_db(dbname = "postgres")
 dbSendQuery(conn, "drop database if exists mreferences")
 dbSendQuery(conn, "create database mreferences")
 
-dbDisconnect(conn)
+DBI::dbDisconnect(conn)
 
 # Initialize 3 projects
 cred <- credentials()
@@ -25,11 +25,11 @@ init_project(path = "lab/exp-references/project-1", dbname = "mreferences",
 
 ## Edit Project 1
 
-init_project(path = "lab/exp-references/project-2", dbname = "mreferences",
+init_project(path = "lab/exp-references/project-3", dbname = "mreferences",
     path_bk = "lab/exp-references")
 
 ## Edit Project 2
-
+release_project("lab/exp-references/project-2-old", "lab/exp-references")
 init_project(path = "lab/exp-references/project-3", dbname = "mreferences",
     path_bk = "lab/exp-references")
 

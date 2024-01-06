@@ -4,7 +4,6 @@ initialized: 2024-01-04 10:05
 dms: PostgreSQL 16.1 (Ubuntu 16.1-1.pgdg22.04+1) on x86_64-pc-linux-gnu, compiled
   by gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0, 64-bit
 server: 16.1 (Ubuntu 16.1-1.pgdg22.04+1)
-remarks: |-
-  | line 1
-  | line2
-released: 2024-01-04 10:18
+remarks: |
+  Expanding the database to the first 1000 entries.
+released: 2024-01-05 03:24

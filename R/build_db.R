@@ -9,11 +9,9 @@
 #' @param path A character value with the path to the collection of releases
 #'     (backups).
 #' @param dbname A character value with the name of the database.
-#' @param release A character value or a string used to select the respective
+#' @param release An integer or character value used to select the respective
 #'     version of the release. For character, the password 'last' refers to
-#'     the newest version. Other character values will be matched with the names
-#'     of the collected releases. If this pattern does not match any release
-#'     or matches more than one, an error message will be retrieved.
+#'     the newest version.
 #'     For integers, the order of the backup according to [sort_releases()].
 #'     Negative values will be used to count backward with 0 as the newest
 #'     release.
@@ -44,41 +42,14 @@ build_db <- function(
   # Select release
   if (is.character(release)) {
     if (release == "last") {
-      N <- nrow(tab_rel)
-    } else {
-      N <- which(grepl(release, tab_rel$release))
-      if (length(N) != 1) {
-        N <- NA
-      }
-    }
-    if (is.na(N)) {
-      stop(paste0(
-        "No or multiple releases matching the request '", release,
-        "'"
-      ))
+      N <- max(tab_rel$nr)
     }
   } else {
     if (release > 0) {
-      if (release > nrow(tab_rel)) {
-        stop(paste0(
-          "The requested release number '", release,
-          "' is higher than the number of stored releases '",
-          nrow(tab_rel), "'."
-        ))
-      } else {
-        N <- release
-      }
+      N <- release
     }
     if (release <= 0) {
-      if (-release > nrow(tab_rel)) {
-        stop(paste0(
-          "The requested release number '", -release,
-          "' is higher than the number of stored releases '",
-          nrow(tab_rel), "'."
-        ))
-      } else {
-        N <- nrow(tab_rel) + release
-      }
+      N <- tab_rel$nr[tab_rel$neg == release]
     }
   }
   sel_rel <- tab_rel$release[N]
@@ -97,8 +68,6 @@ build_db <- function(
   if (missing(auxiliar_db)) {
     auxiliar_db <- dbname
   }
-
-
   # Check if database exists, if not create. Use argument overwrite.
   conn <- connect_db(
     dbname = "postgres",

@@ -8,14 +8,14 @@
  collate  en_US.UTF-8
  ctype    en_US.UTF-8
  tz       Europe/Berlin
- date     2024-01-05
+ date     2024-01-04
  pandoc   3.1.10 @ /usr/bin/ (via rmarkdown)
 
 ─ Packages ───────────────────────────────────────────────────────────────────
  package     * version    date (UTC) lib source
- backpackR   * 0.0.1      2024-01-05 [1] Github (kamapu/backpackR@fe49dd0)
- biblio        0.0.8.9001 2023-12-30 [1] Github (kamapu/biblio@a0a222c)
- biblioDB      0.0.1.9001 2023-12-30 [1] Github (kamapu/biblioDB@a8213db)
+ backpackR   * 0.0.1      2024-01-04 [1] Github (kamapu/backpackR@3600c44)
+ biblio      * 0.0.8.9001 2023-12-30 [1] Github (kamapu/biblio@a0a222c)
+ biblioDB    * 0.0.1.9001 2023-12-30 [1] Github (kamapu/biblioDB@a8213db)
  bit           4.0.5      2022-11-15 [1] CRAN (R 4.3.2)
  bit64         4.0.5      2020-08-30 [1] CRAN (R 4.3.2)
  blob          1.2.4      2023-03-17 [1] CRAN (R 4.3.2)
@@ -45,7 +45,7 @@
  rj.gd         4.0.10-0   2023-12-12 [2] local
  rlang         1.1.2      2023-11-04 [2] CRAN (R 4.3.2)
  rmarkdown     2.25       2023-09-18 [2] CRAN (R 4.3.2)
- RPostgres   * 1.4.6      2023-10-22 [1] CRAN (R 4.3.2)
+ RPostgres     1.4.6      2023-10-22 [1] CRAN (R 4.3.2)
  RPostgreSQL   0.7-5      2023-02-10 [1] CRAN (R 4.3.2)
  RSQLite       2.3.4      2023-12-08 [1] CRAN (R 4.3.2)
  sessioninfo   1.2.2      2021-12-06 [2] CRAN (R 4.3.2)

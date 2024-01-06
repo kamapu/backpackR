@@ -25,11 +25,9 @@ build_db(
 
 \item{dbname}{A character value with the name of the database.}
 
-\item{release}{A character value or a string used to select the respective
+\item{release}{An integer or character value used to select the respective
 version of the release. For character, the password 'last' refers to
-the newest version. Other character values will be matched with the names
-of the collected releases. If this pattern does not match any release
-or matches more than one, an error message will be retrieved.
+the newest version.
 For integers, the order of the backup according to \code{\link[=sort_releases]{sort_releases()}}.
 Negative values will be used to count backward with 0 as the newest
 release.}
