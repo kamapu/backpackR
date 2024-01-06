@@ -16,7 +16,7 @@ query_loop <- function(
   for (i in tab_rel$nr) {
     build_db(
       path = path, dbname = dbname, release = i,
-      #auxiliar_db = auxiliar_db,
+      # auxiliar_db = auxiliar_db,
       overwrite = TRUE, host = host, port = port,
       user = user, password = password, ...
     )
