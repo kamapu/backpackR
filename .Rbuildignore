@@ -9,5 +9,3 @@
 ^README\.md$
 ^\.github$
 ^LICENSE\.md$
-
-^R/query_loop.R$
